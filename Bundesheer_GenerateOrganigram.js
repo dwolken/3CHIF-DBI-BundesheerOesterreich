@@ -6,11 +6,14 @@ import { readFileSync, writeFileSync } from "fs";
 const MYSQL_HOST = process.env.MYSQL_HOST || "localhost";
 const MYSQL_USER = process.env.MYSQL_USER || "root";
 const MYSQL_PWD  = process.env.MYSQL_PWD  || "mysql";
+const MYSQL_PORT = process.env.MYSQL_PORT || 3306
 
 const connection = await mysql.createConnection({
   host: MYSQL_HOST,
   user: MYSQL_USER,
-  password: MYSQL_PWD
+  password: MYSQL_PWD,
+  port: MYSQL_PORT
+
 });
 
 // 1. SQL-Schema einspielen
