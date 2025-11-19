@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS militaer;
-CREATE DATABASE militaer;
-USE militaer;
+DROP DATABASE IF EXISTS Bundesheer_DB;
+CREATE DATABASE Bundesheer_DB;
+USE Bundesheer_DB;
 
 CREATE TABLE rang (
     id INT AUTO_INCREMENT PRIMARY KEY,
