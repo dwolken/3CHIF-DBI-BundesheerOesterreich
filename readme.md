@@ -44,10 +44,11 @@ Standardwerte des Scripts:
 - Benutzer: `root`
 - Passwort: `mysql`
 
-Falls dein Passwort anders ist, setze vorher:
+Falls dein Passwort oder Port anders ist, setze vorher:
 
 ```bash
 export MYSQL_PWD="deinpasswort"
+export MYSQL_PORT=deinePortNummer
 ```
 
 Optional kannst du auch Benutzer und Host setzen:
