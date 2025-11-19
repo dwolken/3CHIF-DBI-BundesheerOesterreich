@@ -92,3 +92,14 @@ Beide Dateien werden im Projektordner erzeugt.
 - `Bundesheer_GenerateOrganigramm.js` – Node-Script zum Erzeugen der Grafiken  
 - `Bundesheer_SQL-Schema.sql` – Datenbankschema + Beispiel-Daten  
 - `README.md` – diese Anleitung
+
+---
+
+## Wichtiger Hinweis
+
+Dieses Projekt sollte in einer normalen Bash ausgeführt werden:
+- Git Bash unter Windows ODER
+- Linux/Mac Terminal
+
+WSL mit Windows-Node wird nicht unterstützt.
+
