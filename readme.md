@@ -1,13 +1,13 @@
 # Bundesheer Österreich – Organigramm (PNG & SVG)
 
 Dieses Projekt erzeugt ein Organigramm des österreichischen Bundesheeres
-aus einer MySQL-Datenbank und generiert daraus **Bundesheer_Ogranigram.svg** und **Bundesheer_Organigram.png**.
+aus einer MySQL-Datenbank und generiert daraus **Bundesheer_Organigram.svg** und **Bundesheer_Organigram.png**.
 
 Es werden nur folgende Programme benötigt:
 
 - Node.js
 - MySQL-Server (lokal, `localhost`)
-- eine Bash-Shell (mit `git`)
+- eine Bash-Shell (Git Bash oder Linux/Mac Terminal)
 - `npm` zum Installieren der Node-Module
 
 Es werden **keine zusätzlichen Grafikprogramme** benötigt (kein Graphviz, kein VS Code).
