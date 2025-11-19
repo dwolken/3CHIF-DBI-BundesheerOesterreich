@@ -87,7 +87,7 @@ Beide Dateien werden im Projektordner erzeugt.
 
 ---
 
-## 6. Dateien im Projekt
+## 6. Wichtige Dateien im Projekt
 
 - `Bundesheer_GenerateOrganigramm.js` – Node-Script zum Erzeugen der Grafiken  
 - `Bundesheer_SQL-Schema.sql` – Datenbankschema + Beispiel-Daten  
