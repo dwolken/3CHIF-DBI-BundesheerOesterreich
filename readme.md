@@ -62,7 +62,7 @@ export MYSQL_HOST="localhost"
 ## 4. Script ausführen
 
 ```bash
-node Bundesheer_GenerateOrganigramm.js
+node Bundesheer_GenerateOrganigram.js
 ```
 
 Das Script:
