@@ -5,9 +5,9 @@ aus einer MySQL-Datenbank und generiert daraus **Bundesheer_Ogranigram.svg** und
 
 Es werden nur folgende Programme benötigt:
 
-- Node.js (>= 18 empfohlen)
+- Node.js
 - MySQL-Server (lokal, `localhost`)
-- eine Bash-Shell
+- eine Bash-Shell (mit `git`)
 - `npm` zum Installieren der Node-Module
 
 Es werden **keine zusätzlichen Grafikprogramme** benötigt (kein Graphviz, kein VS Code).
