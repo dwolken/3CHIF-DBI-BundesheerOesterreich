@@ -43,6 +43,7 @@ Standardwerte des Scripts:
 - Host: `localhost`
 - Benutzer: `root`
 - Passwort: `mysql`
+- Port: `3306`
 
 Falls dein Passwort oder Port anders ist, setze vorher:
 
