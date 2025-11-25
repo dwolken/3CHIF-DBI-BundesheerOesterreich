@@ -1,6 +1,7 @@
 import mysql from "mysql2/promise";
 import sharp from "sharp";
 import { writeFileSync } from "fs";
+import { cwd } from "process";
 
 const MYSQL_HOST = process.env.MYSQL_HOST || "localhost";
 const MYSQL_USER = process.env.MYSQL_USER || "root";
@@ -104,8 +105,12 @@ svgParts.push("</svg>");
 
 const svgContent = svgParts.join("\n");
 writeFileSync("Bundesheer_Organigram.svg", svgContent, "utf8");
+Console.console.log("Bundesheer_Organigram.svg erstellt!");
+
 
 const pngBuffer = await sharp(Buffer.from(svgContent)).png().toBuffer();
 writeFileSync("Bundesheer_Organigram.png", pngBuffer);
+Console.console.log("Bundesheer_Organigram.png erstellt!");
 
 await connection.end();
+Console.log("Fertig!")
