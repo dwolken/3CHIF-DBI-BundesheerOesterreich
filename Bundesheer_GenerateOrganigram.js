@@ -1,42 +1,20 @@
-import mysql from "mysql2/promise";
+import pkg from "pg";
 import sharp from "sharp";
-import { readFileSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
 
-const MYSQL_HOST = process.env.MYSQL_HOST || "localhost";
-const MYSQL_USER = process.env.MYSQL_USER || "root";
-const MYSQL_PWD  = process.env.MYSQL_PWD  || "mysql";
-const MYSQL_PORT = process.env.MYSQL_PORT || 3306;
+const { Client } = pkg;
 
-const admin = await mysql.createConnection({
-  host: MYSQL_HOST,
-  user: MYSQL_USER,
-  password: MYSQL_PWD,
-  port: MYSQL_PORT
+const client = new Client({
+  host: process.env.PG_HOST || "localhost",
+  user: process.env.PG_USER || "postgres",
+  password: process.env.PG_PWD || "postgres",
+  database: process.env.PG_DB || "Bundesheer_DB",
+  port: process.env.PG_PORT || 5432
 });
 
-const [dbExists] = await admin.query(`
-  SELECT SCHEMA_NAME 
-  FROM INFORMATION_SCHEMA.SCHEMATA 
-  WHERE SCHEMA_NAME = 'Bundesheer_DB';
-`);
+await client.connect();
 
-if (dbExists.length === 0) {
-  const sql = readFileSync("./Bundesheer_SQL-Schema.sql", "utf8");
-  const statements = sql.split(/;\s*\n/).filter(s => s.trim().length > 0);
-  for (const s of statements) await admin.query(s);
-}
-
-await admin.end();
-
-const connection = await mysql.createConnection({
-  host: MYSQL_HOST,
-  user: MYSQL_USER,
-  password: MYSQL_PWD,
-  port: MYSQL_PORT,
-  database: "Bundesheer_DB"
-});
-
-const [rows] = await connection.query(`
+const result = await client.query(`
 SELECT 
   m.id,
   m.parent_id,
@@ -44,8 +22,10 @@ SELECT
 FROM mitglied m
 LEFT JOIN mitglied_rang mr ON mr.mitglied_id = m.id
 LEFT JOIN rang r ON r.id = mr.rang_id
-WHERE mr.bis IS NULL OR mr.bis >= CURDATE();
+WHERE mr.bis IS NULL OR mr.bis >= CURRENT_DATE;
 `);
+
+const rows = result.rows;
 
 const nodesById = new Map();
 for (const row of rows) nodesById.set(row.id, { ...row, children: [] });
@@ -125,11 +105,11 @@ svgParts.push("</svg>");
 
 const svgContent = svgParts.join("\n");
 writeFileSync("Bundesheer_Organigram.svg", svgContent, "utf8");
-console.log("Bundesheer_Organigram.png erstellt.");
+console.log("Bundesheer_Organigram.svg erstellt.")
+
 const pngBuffer = await sharp(Buffer.from(svgContent)).png().toBuffer();
 writeFileSync("Bundesheer_Organigram.png", pngBuffer);
-console.log("Bundesheer_Organigram.png erstellt.");
+console.log("Bundesheer_Organigram.png erstellt.")
 
-
-await connection.end();
+await client.end();
 console.log("Fertig!");
