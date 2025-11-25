@@ -1,19 +1,39 @@
 import mysql from "mysql2/promise";
 import sharp from "sharp";
-import { writeFileSync } from "fs";
-import { cwd } from "process";
+import { readFileSync, writeFileSync } from "fs";
 
 const MYSQL_HOST = process.env.MYSQL_HOST || "localhost";
 const MYSQL_USER = process.env.MYSQL_USER || "root";
 const MYSQL_PWD  = process.env.MYSQL_PWD  || "mysql";
 const MYSQL_PORT = process.env.MYSQL_PORT || 3306;
 
+const admin = await mysql.createConnection({
+  host: MYSQL_HOST,
+  user: MYSQL_USER,
+  password: MYSQL_PWD,
+  port: MYSQL_PORT
+});
+
+const [dbExists] = await admin.query(`
+  SELECT SCHEMA_NAME 
+  FROM INFORMATION_SCHEMA.SCHEMATA 
+  WHERE SCHEMA_NAME = 'Bundesheer_DB';
+`);
+
+if (dbExists.length === 0) {
+  const sql = readFileSync("./Bundesheer_SQL-Schema.sql", "utf8");
+  const statements = sql.split(/;\s*\n/).filter(s => s.trim().length > 0);
+  for (const s of statements) await admin.query(s);
+}
+
+await admin.end();
+
 const connection = await mysql.createConnection({
   host: MYSQL_HOST,
   user: MYSQL_USER,
   password: MYSQL_PWD,
   port: MYSQL_PORT,
-  database: "bundesheer_db"
+  database: "Bundesheer_DB"
 });
 
 const [rows] = await connection.query(`
@@ -105,12 +125,11 @@ svgParts.push("</svg>");
 
 const svgContent = svgParts.join("\n");
 writeFileSync("Bundesheer_Organigram.svg", svgContent, "utf8");
-Console.console.log("Bundesheer_Organigram.svg erstellt!");
-
-
+console.log("Bundesheer_Organigram.png erstellt.");
 const pngBuffer = await sharp(Buffer.from(svgContent)).png().toBuffer();
 writeFileSync("Bundesheer_Organigram.png", pngBuffer);
-Console.console.log("Bundesheer_Organigram.png erstellt!");
+console.log("Bundesheer_Organigram.png erstellt.");
+
 
 await connection.end();
-Console.log("Fertig!")
+console.log("Fertig!");

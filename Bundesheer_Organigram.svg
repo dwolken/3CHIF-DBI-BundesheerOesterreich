@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2640" height="600" viewBox="0 0 2640 600">
+<style>
+    rect { fill: #e0e0e0; stroke: #000; stroke-width: 1; rx: 4; ry: 4; }
+    line { stroke: #777; stroke-width: 1.5; }
+    text { font-family: Helvetica, Arial, sans-serif; font-size: 12px; }
+  </style>
+<line x1="1515" y1="80" x2="930" y2="160" />
+<line x1="1515" y1="80" x2="2100" y2="160" />
+<line x1="930" y1="200" x2="540" y2="280" />
+<line x1="930" y1="200" x2="1320" y2="280" />
+<line x1="2100" y1="200" x2="1840" y2="280" />
+<line x1="2100" y1="200" x2="2360" y2="280" />
+<line x1="540" y1="320" x2="280" y2="400" />
+<line x1="540" y1="320" x2="800" y2="400" />
+<line x1="1320" y1="320" x2="1190" y2="400" />
+<line x1="1320" y1="320" x2="1450" y2="400" />
+<line x1="1840" y1="320" x2="1710" y2="400" />
+<line x1="1840" y1="320" x2="1970" y2="400" />
+<line x1="2360" y1="320" x2="2230" y2="400" />
+<line x1="2360" y1="320" x2="2490" y2="400" />
+<line x1="280" y1="440" x2="150" y2="520" />
+<line x1="280" y1="440" x2="410" y2="520" />
+<line x1="800" y1="440" x2="670" y2="520" />
+<line x1="800" y1="440" x2="930" y2="520" />
+<line x1="1190" y1="440" x2="1190" y2="520" />
+<rect x="1308.75" y="40" width="412.5" height="40" />
+<text x="1318.75" y="65">Bundesminister/in für Landesverteidigung Claudia Tanner</text>
+<rect x="820" y="160" width="220" height="40" />
+<text x="830" y="185">General Franz Leitner</text>
+<rect x="1990" y="160" width="220" height="40" />
+<text x="2000" y="185">General Michael Bauer</text>
+<rect x="430" y="280" width="220" height="40" />
+<text x="440" y="305">Generalmajor Markus Nehammer</text>
+<rect x="1210" y="280" width="220" height="40" />
+<text x="1220" y="305">Generalmajor Andreas Pichler</text>
+<rect x="1730" y="280" width="220" height="40" />
+<text x="1740" y="305">Brigadier Thomas Gruber</text>
+<rect x="2250" y="280" width="220" height="40" />
+<text x="2260" y="305">Brigadier Gerhard Lenz</text>
+<rect x="170" y="400" width="220" height="40" />
+<text x="180" y="425">Oberst Lukas Auer</text>
+<rect x="690" y="400" width="220" height="40" />
+<text x="700" y="425">Oberst Stefan Huber</text>
+<rect x="1080" y="400" width="220" height="40" />
+<text x="1090" y="425">Oberstleutnant Peter Koller</text>
+<rect x="1340" y="400" width="220" height="40" />
+<text x="1350" y="425">Oberstleutnant Johann Mayer</text>
+<rect x="1600" y="400" width="220" height="40" />
+<text x="1610" y="425">Major Elisabeth Weber</text>
+<rect x="1860" y="400" width="220" height="40" />
+<text x="1870" y="425">Major Christoph Hauser</text>
+<rect x="2120" y="400" width="220" height="40" />
+<text x="2130" y="425">Hauptmann Martin Wolf</text>
+<rect x="2380" y="400" width="220" height="40" />
+<text x="2390" y="425">Hauptmann Daniel Eder</text>
+<rect x="40" y="520" width="220" height="40" />
+<text x="50" y="545">Leutnant Patrick Hofer</text>
+<rect x="300" y="520" width="220" height="40" />
+<text x="310" y="545">Leutnant Julia Grasl</text>
+<rect x="560" y="520" width="220" height="40" />
+<text x="570" y="545">Korporal Helmut Fink</text>
+<rect x="820" y="520" width="220" height="40" />
+<text x="830" y="545">Gefreiter Karin Lehner</text>
+<rect x="1080" y="520" width="220" height="40" />
+<text x="1090" y="545">Rekrut David Krenn</text>
+</svg>
