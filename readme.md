@@ -37,17 +37,17 @@ Standardwerte:
 
 - Host: localhost  
 - Port: 5432  
-- Benutzer: postgres  
+- Benutzer: postgres
 - Passwort: postgres  
 - Datenbankname: Bundesheer_DB
 
 Extern änderbar:
 
 ```bash
-export PG_HOST=IhrHost
+export PG_HOST="IhrHost"
 export PG_PORT=IhrPort
-export PG_USER=IhrUser
-export PG_PWD=IhrPasswort
+export PG_USER="IhrUser"
+export PG_PWD="IhrPasswort"
 ```
 
 ---
