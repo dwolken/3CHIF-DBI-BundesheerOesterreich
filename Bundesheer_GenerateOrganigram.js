@@ -18,6 +18,8 @@ async function tableExists(client, name) {
   return q.rowCount > 0;
 }
 
+console.log("Verbinde zu PostgreSQL…");
+
 const sys = new Client({
   host: PG_HOST,
   port: PG_PORT,
@@ -26,6 +28,7 @@ const sys = new Client({
   database: "postgres"
 });
 await sys.connect();
+console.log("Verbunden (postgres)");
 
 const dbCheck = await sys.query(
   "SELECT 1 FROM pg_database WHERE datname = $1",
@@ -33,10 +36,16 @@ const dbCheck = await sys.query(
 );
 
 if (dbCheck.rowCount === 0) {
+  console.log("Datenbank existiert nicht. Erstelle:", PG_DB);
   await sys.query(`CREATE DATABASE "${PG_DB}"`);
+  console.log("Datenbank erstellt.");
+} else {
+  console.log("Datenbank existiert bereits:", PG_DB);
 }
 
 await sys.end();
+
+console.log("Verbinde zu", PG_DB, "…");
 
 const client = new Client({
   host: PG_HOST,
@@ -47,23 +56,33 @@ const client = new Client({
 });
 await client.connect();
 
+console.log("Verbunden:", PG_DB);
+
 const firstTable = await tableExists(client, "rang");
 
 if (!firstTable) {
-  const schema = readFileSync("./schema.sql", "utf8");
+  console.log("Tabellen fehlen. Spiele Schema ein…");
+  const schema = readFileSync("./Bundesheer_Schema.sql", "utf8");
   await client.query(schema);
+  console.log("Schema erfolgreich eingespielt.");
+} else {
+  console.log("Tabellen existieren bereits. Schema wird nicht erneut eingespielt.");
 }
+
+console.log("Lese Daten…");
 
 const result = await client.query(`
 SELECT 
   m.id,
   m.parent_id,
-  CONCAT(r.bezeichnung, ' ', m.vorname, ' ', m.nachname) AS name
+  (r.bezeichnung || ' ' || m.vorname || ' ' || m.nachname) AS name
 FROM mitglied m
 LEFT JOIN mitglied_rang mr ON mr.mitglied_id = m.id
 LEFT JOIN rang r ON r.id = mr.rang_id
 WHERE mr.bis IS NULL OR mr.bis >= CURRENT_DATE;
 `);
+
+console.log("Datensätze geladen:", result.rowCount);
 
 const rows = result.rows;
 
@@ -143,7 +162,13 @@ svgParts.push("</svg>");
 const svgContent = svgParts.join("\n");
 writeFileSync("Bundesheer_Organigram.svg", svgContent, "utf8");
 
+console.log("SVG erstellt: Bundesheer_Organigram.svg");
+
 const pngBuffer = await sharp(Buffer.from(svgContent)).png().toBuffer();
 writeFileSync("Bundesheer_Organigram.png", pngBuffer);
 
+console.log("PNG erstellt: Bundesheer_Organigram.png");
+
 await client.end();
+
+console.log("Fertig.");
