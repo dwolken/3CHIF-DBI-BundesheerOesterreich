@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "3chif-dbi-bundesheeroesterreich",
   "version": "1.0.0",
   "description": "Generiert Organigramme für das Bundesheer-Projekt.",
