@@ -12,7 +12,7 @@ const connection = await mysql.createConnection({
   user: MYSQL_USER,
   password: MYSQL_PWD,
   port: MYSQL_PORT,
-  database: "Bundesheer_DB"
+  database: "bundesheer_db"
 });
 
 const [rows] = await connection.query(`
