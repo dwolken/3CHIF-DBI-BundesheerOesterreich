@@ -1,18 +1,58 @@
 import pkg from "pg";
 import sharp from "sharp";
-import { writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 
 const { Client } = pkg;
 
-const client = new Client({
-  host: process.env.PG_HOST || "localhost",
-  user: process.env.PG_USER || "postgres",
-  password: process.env.PG_PWD || "postgres",
-  database: process.env.PG_DB || "Bundesheer_DB",
-  port: process.env.PG_PORT || 5432
-});
+const PG_HOST = process.env.PG_HOST || "localhost";
+const PG_PORT = process.env.PG_PORT || 5432;
+const PG_USER = process.env.PG_USER || "postgres";
+const PG_PWD  = process.env.PG_PWD  || "postgres";
+const PG_DB   = process.env.PG_DB   || "Bundesheer_DB";
 
+async function tableExists(client, name) {
+  const q = await client.query(
+    "SELECT 1 FROM information_schema.tables WHERE table_name = $1",
+    [name]
+  );
+  return q.rowCount > 0;
+}
+
+const sys = new Client({
+  host: PG_HOST,
+  port: PG_PORT,
+  user: PG_USER,
+  password: PG_PWD,
+  database: "postgres"
+});
+await sys.connect();
+
+const dbCheck = await sys.query(
+  "SELECT 1 FROM pg_database WHERE datname = $1",
+  [PG_DB]
+);
+
+if (dbCheck.rowCount === 0) {
+  await sys.query(`CREATE DATABASE "${PG_DB}"`);
+}
+
+await sys.end();
+
+const client = new Client({
+  host: PG_HOST,
+  port: PG_PORT,
+  user: PG_USER,
+  password: PG_PWD,
+  database: PG_DB
+});
 await client.connect();
+
+const firstTable = await tableExists(client, "rang");
+
+if (!firstTable) {
+  const schema = readFileSync("./schema.sql", "utf8");
+  await client.query(schema);
+}
 
 const result = await client.query(`
 SELECT 
@@ -83,12 +123,9 @@ svgParts.push(
 for (const node of allNodes) {
   if (node.parent_id && nodesById.has(node.parent_id)) {
     const parent = nodesById.get(node.parent_id);
-    const parentCenterX = parent.x + parent.width / 2;
-    const parentBottomY = parent.y + nodeHeight;
-    const childCenterX = node.x + node.width / 2;
-    const childTopY = node.y;
     svgParts.push(
-      `<line x1="${parentCenterX}" y1="${parentBottomY}" x2="${childCenterX}" y2="${childTopY}" />`
+      `<line x1="${parent.x + parent.width / 2}" y1="${parent.y + nodeHeight}"
+             x2="${node.x + node.width / 2}" y2="${node.y}" />`
     );
   }
 }
@@ -105,11 +142,8 @@ svgParts.push("</svg>");
 
 const svgContent = svgParts.join("\n");
 writeFileSync("Bundesheer_Organigram.svg", svgContent, "utf8");
-console.log("Bundesheer_Organigram.svg erstellt.")
 
 const pngBuffer = await sharp(Buffer.from(svgContent)).png().toBuffer();
 writeFileSync("Bundesheer_Organigram.png", pngBuffer);
-console.log("Bundesheer_Organigram.png erstellt.")
 
 await client.end();
-console.log("Fertig!");

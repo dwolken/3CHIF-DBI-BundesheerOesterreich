@@ -1,16 +1,15 @@
 # Bundesheer Österreich – Organigramm (PNG & SVG)
 
-Dieses Projekt erzeugt ein Organigramm des österreichischen Bundesheeres
-aus einer MySQL-Datenbank und generiert daraus **Bundesheer_Organigram.svg** und **Bundesheer_Organigram.png**.
+Dieses Projekt erzeugt ein Organigramm des österreichischen Bundesheeres aus einer PostgreSQL-Datenbank und generiert die Dateien:
 
-Es werden nur folgende Programme benötigt:
+- Bundesheer_Organigram.svg  
+- Bundesheer_Organigram.png
 
-- Node.js
-- MySQL-Server (lokal, `localhost`)
+Es wird nur Folgendes benötigt:
+
+- Node.js  
+- ein laufender PostgreSQL-Server  
 - eine Bash-Shell (Git Bash oder Linux/Mac Terminal)
-- `npm` zum Installieren der Node-Module
-
-Es werden **keine zusätzlichen Grafikprogramme** benötigt (kein Graphviz, kein VS Code).
 
 ---
 
@@ -20,7 +19,6 @@ Es werden **keine zusätzlichen Grafikprogramme** benötigt (kein Graphviz, kein
 git clone https://github.com/dwolken/3CHIF-DBI-BundesheerOesterreich.git
 cd 3CHIF-DBI-BundesheerOesterreich
 ```
-
 oder ZIP herunterladen und entpacken.
 
 ---
@@ -28,35 +26,28 @@ oder ZIP herunterladen und entpacken.
 ## 2. Abhängigkeiten installieren
 
 ```bash
-npm install mysql2 sharp
+npm install pg sharp
 ```
 
 ---
 
-## 3. MySQL vorbereiten
+## 3. Datenbankverbindung setzen
 
-Stelle sicher, dass ein MySQL-Server auf `localhost` läuft
-und du mit Benutzer `root` zugreifen kannst.
+Standardwerte:
 
-Standardwerte des Scripts:
+- Host: localhost  
+- Port: 5432  
+- Benutzer: postgres  
+- Passwort: postgres  
+- Datenbankname: Bundesheer_DB
 
-- Host: `localhost`
-- Benutzer: `root`
-- Passwort: `mysql`
-- Port: `3306`
-
-Falls dein Passwort oder Port anders ist, setze vorher:
+Extern änderbar:
 
 ```bash
-export MYSQL_PWD="deinpasswort"
-export MYSQL_PORT=deinePortNummer
-```
-
-Optional kannst du auch Benutzer und Host setzen:
-
-```bash
-export MYSQL_USER="root"
-export MYSQL_HOST="localhost"
+export PG_HOST=IhrHost
+export PG_PORT=IhrPort
+export PG_USER=IhrUser
+export PG_PWD=IhrPasswort
 ```
 
 ---
@@ -64,44 +55,40 @@ export MYSQL_HOST="localhost"
 ## 4. Script ausführen
 
 ```bash
-node Bundesheer_GenerateOrganigram.js
+node Bundesheer_GenerateOrganigramm.js
 ```
 
 Das Script:
 
-1. spielt `Bundesheer_SQL-Schema.sql` in MySQL ein  
-2. verwendet die Datenbank `Bundesheer_DB`  
-3. liest alle Personen mit Rang + Über-/Unterstellung  
-4. baut ein Baumlayout  
-5. erzeugt die Dateien:
-
-- `Bundesheer_Organigram.svg`
-- `Bundesheer_Organigram.png`
+- verbindet sich mit PostgreSQL  
+- legt die Datenbank an, falls sie nicht existiert  
+- prüft, ob Tabellen existieren  
+- spielt Bundesheer_Schema.sql ein, falls nötig  
+- liest die Daten  
+- erzeugt SVG und PNG  
 
 ---
 
 ## 5. Ergebnis
 
-- **Bundesheer_Organigram.svg** – Vektorgrafik des Organigramms  
-- **Bundesheer_Organigram.png** – PNG-Version der Struktur  
+Nach dem Ausführen:
 
-Beide Dateien werden im Projektordner erzeugt.
+- Bundesheer_Organigram.svg  
+- Bundesheer_Organigram.png  
 
----
-
-## 6. Wichtige Dateien im Projekt
-
-- `Bundesheer_GenerateOrganigramm.js` – Node-Script zum Erzeugen der Grafiken  
-- `Bundesheer_SQL-Schema.sql` – Datenbankschema + Beispiel-Daten  
-- `README.md` – diese Anleitung
+befinden sich im Projektordner.
 
 ---
 
-## Wichtiger Hinweis
+## 6. Struktur
 
-Dieses Projekt sollte in einer normalen Bash ausgeführt werden:
-- Git Bash unter Windows ODER
-- Linux/Mac Terminal
+- Bundesheer_GenerGenerateOrganigram.js  
+- schema.sql  
+- README.md  
 
-WSL mit Windows-Node wird nicht unterstützt.
+---
 
+## Hinweis
+
+Der Ablauf funktioniert ohne zusätzliche Programme.  
+Es wird nichts installiert außer Node.js, und alle Zugangsdaten werden über `export` gesetzt.
