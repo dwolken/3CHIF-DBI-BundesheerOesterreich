@@ -2,7 +2,7 @@
 
 BEGIN;
 
--- Tabellen anlegen (ohne Keys)
+-- Tables
 CREATE TABLE rang (
     id INT,
     bezeichnung VARCHAR(50) NOT NULL
@@ -100,7 +100,7 @@ ALTER TABLE mitglied_einheit
     FOREIGN KEY (einheit_id) REFERENCES einheit(id)
     ON DELETE CASCADE ON UPDATE CASCADE;
 
--- Insert-Daten
+-- Inserts
 INSERT INTO rang VALUES
 (1,'Bundesminister/in für Landesverteidigung'),
 (2,'General'),
