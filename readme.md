@@ -92,3 +92,6 @@ befinden sich im Projektordner.
 
 Der Ablauf funktioniert ohne zusätzliche Programme.  
 Es wird nichts installiert außer Node.js, und alle Zugangsdaten werden über `export` gesetzt.
+
+Für dieses Projekt wird empfohlen, eine Bash-Umgebung wie Git Bash, Ubuntu (WSL) oder ein Linux/Mac-Terminal zu verwenden.
+In CMD oder PowerShell stehen manche der verwendeten Befehle (z. B. export) nicht oder nur eingeschränkt zur Verfügung, wodurch einzelne Schritte nicht korrekt ausgeführt werden können.
